@@ -26,7 +26,7 @@ def get_speaker_times(filename):
     return speaker_times
 
 wav_folders = glob.glob(sys.argv[1]+"/*")
-print(wav_folders)
+# print(wav_folders)
 output_folder = "output/wavs/"
 txt_folder = "output/txt"
 Path(output_folder).mkdir(parents=True, exist_ok=True)
@@ -45,10 +45,10 @@ for folder in wav_folders:
             wav = AudioSegment.from_wav(folder+"/vocals.wav")
             chunk=wav[start_time:end_time]
             Speaker_folder = speaker_times[ts][0]
-            Path(output_folder+"/"+folder+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
-            Path(txt_folder+"/"+folder+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
-            chunk.export(output_folder+"/"+folder+"/"+Speaker_folder+"/"+str(counter)+'.wav', format="wav")
-            with open(txt_folder+"/"+folder+"/"+Speaker_folder+"/"+str(counter)+'.txt', "w+") as f:
+            Path(output_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
+            Path(txt_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
+            chunk.export(output_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder+"/"+str(counter)+'.wav', format="wav")
+            with open(txt_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder+"/"+str(counter)+'.txt', "w+") as f:
                 f.write(row["text"])
             counter+=1
     time_stamps_frame = time_stamps[time_stamps["start"] >= speaker_times[-1][1]]
@@ -59,9 +59,9 @@ for folder in wav_folders:
         wav = AudioSegment.from_wav(folder+"/vocals.wav")
         chunk=wav[start_time:end_time]
         Speaker_folder = speaker_times[-1][0]
-        Path(output_folder+"/"+folder+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
-        Path(txt_folder+"/"+folder+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
-        chunk.export(output_folder+"/"+folder+"/"+Speaker_folder+"/"+str(counter)+'.wav', format="wav")
-        with open(txt_folder+"/"+folder+"/"+Speaker_folder+"/"+str(counter)+'.txt', "w+") as f:
+        Path(output_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
+        Path(txt_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
+        chunk.export(output_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder+"/"+str(counter)+'.wav', format="wav")
+        with open(txt_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder+"/"+str(counter)+'.txt', "w+") as f:
                 f.write(row["text"])
         counter+=1
