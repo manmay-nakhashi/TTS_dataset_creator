@@ -1,0 +1,7 @@
+spleeter
+yt-dlp
+requests
+urllib3
+eyed3
+pyaudioanalysis
+pydub
