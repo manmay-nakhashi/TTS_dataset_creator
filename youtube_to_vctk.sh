@@ -18,5 +18,5 @@ for i in cleaned_audio/*/; do ffmpeg -y -i $i/vocals_ns.wav -af "volume=1" $i/vo
 mkdir $2
 mv split_audio cleaned_audio video_files audio_files $2
 
-for i in $2/cleaned_audio/*/vocals.wav; do whisperx $i --language en --hf_token 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 --diarize --min_speakers 1 --max_speakers 2 --output_dir ${i::-10}; done
+for i in $2/cleaned_audio/*/vocals.wav; do whisperx $i --language en --hf_token <hftoken> --diarize --min_speakers 1 --max_speakers 2 --output_dir ${i::-10}; done
 python3 cut_and_export.py $2/cleaned_audio/
