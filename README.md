@@ -5,6 +5,13 @@ create dataset from list of youtube links easily
 git clone https://github.com/m-bain/whisperX
 git clone https://github.com/GregorR/rnnoise-models.git
 ```
+install ffmpeg > 5.0 for rnnnoise support
+for using different rnnnoise model
+you can change rnnnoise path in th bash script.
+
+```
+conda install -c conda-forge ffmpeg==5.1.0
+```
 
 setup whisperx
 
