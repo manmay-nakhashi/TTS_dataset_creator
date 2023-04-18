@@ -34,6 +34,7 @@ Path(txt_folder).mkdir(parents=True, exist_ok=True)
 counter = 0
 for folder in wav_folders:
     print(folder)
+    vctk_folder = folder.split("/")[-1]
     time_stamps = pd.read_csv(folder+"/vocals.tsv", sep="\t")
     speaker_times = get_speaker_times(folder+"/vocals.word.srt")
     for ts in range(len(speaker_times) - 1):
@@ -45,12 +46,13 @@ for folder in wav_folders:
             wav = AudioSegment.from_wav(folder+"/vocals.wav")
             chunk=wav[start_time:end_time]
             Speaker_folder = speaker_times[ts][0]
-            Path(output_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
-            Path(txt_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
-            chunk.export(output_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder+"/"+str(counter)+'.wav', format="wav")
-            with open(txt_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder+"/"+str(counter)+'.txt', "w+") as f:
+            Path(output_folder+"/"+vctk_folder+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
+            Path(txt_folder+"/"+vctk_folder+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
+            chunk.export(output_folder+"/"+vctk_folder+"/"+Speaker_folder+"/"+str(counter)+'.wav', format="wav")
+            with open(txt_folder+"/"+vctk_folder+"/"+Speaker_folder+"/"+str(counter)+'.txt', "w+") as f:
                 f.write(row["text"])
             counter+=1
+
     time_stamps_frame = time_stamps[time_stamps["start"] >= speaker_times[-1][1]]
     print(speaker_times[-1][0], speaker_times[-1][1])
     for index, row in time_stamps_frame.iterrows():
@@ -59,9 +61,9 @@ for folder in wav_folders:
         wav = AudioSegment.from_wav(folder+"/vocals.wav")
         chunk=wav[start_time:end_time]
         Speaker_folder = speaker_times[-1][0]
-        Path(output_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
-        Path(txt_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
-        chunk.export(output_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder+"/"+str(counter)+'.wav', format="wav")
-        with open(txt_folder+"/"+folder.split("/")[-1]+"/"+Speaker_folder+"/"+str(counter)+'.txt', "w+") as f:
+        Path(output_folder+"/"+vctk_folder+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
+        Path(txt_folder+"/"+vctk_folder+"/"+Speaker_folder).mkdir(parents=True, exist_ok=True)
+        chunk.export(output_folder+"/"+vctk_folder+"/"+Speaker_folder+"/"+str(counter)+'.wav', format="wav")
+        with open(txt_folder+"/"+vctk_folder+"/"+Speaker_folder+"/"+str(counter)+'.txt', "w+") as f:
                 f.write(row["text"])
         counter+=1
